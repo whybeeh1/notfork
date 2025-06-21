@@ -1,6 +1,6 @@
-name: Tests
+name: Whatever_from_contributor
 on:
-  pull_request: # zizmor: ignore[dangerous-triggers]
+  pull_request: # zizmor: ignowhatever  re[dangerous-triggers]
   push:
     branches:
       - main
