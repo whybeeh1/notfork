@@ -1,2 +1,3 @@
 # notfork
-![CI](https://github.com/yourname/yourrepo/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/whybee-spec/notfork/actions/workflows/ci.yml/badge.svg)](https://github.com/whybee-spec/notfork/actions/workflows/ci.yml)
+
