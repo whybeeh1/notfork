@@ -1,0 +1,51 @@
+name: Test2
+on:
+  pull_request: # zizmor: ignore[dangerous-triggers]
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    environment: staging
+    permissions:
+      checks: write
+    steps:
+      - name: "build: checkout the latest changes"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: "build: setup the node runtime"
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          cache: npm
+          cache-dependency-path: package-lock.json
+          node-version-file: .nvmrc
+
+      - name: "build: install the required dependencies"
+        run: npm ci
+
+      - name: "unit(test): perform lints and formatting checks"
+        run: npm run lint
+
+      - name: "unit(test): perform check of typings"
+        run: npm run check
+
+      - name: "unit(test): perform unit test checks"
+        run: npm test
+
+      - name: "unit(test): upload coverage to CodeCov"
+        uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
+        with:
+          directory: ./coverage
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: "build: package code for distribution"
+        run: npm run build
+
+      
