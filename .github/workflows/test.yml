@@ -1,4 +1,4 @@
-name: Tests
+name: Tests2
 on:
   pull_request: # zizmor: ignore[dangerous-triggers]
   push:
